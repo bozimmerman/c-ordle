@@ -2,25 +2,25 @@
 
 * = $7800
         ;.D TEDDLML.BIN
-        BLOCKS = $8548
-        INDEX = $8000
-        ONROM = $FF3E
-        ONRAM = $FF3F
-        PTR = $FE
-        EOALL = $EA6E
+BLOCKS = $8548
+INDEX = $8000
+ONROM = $FF3E
+ONRAM = $FF3F
+PTR = $FE
+EOALL = $EA6E
         JMP GETWORD
         JMP CHKWORD
 ; THE INPUT BUFFER
 INPT
-        bytes 0,0,0,0,0
+        byte 0,0,0,0,0
 BLKST
-        bytes 0,0
+        byte 0,0
 BLKEN
-        bytes 0,0
+        byte 0,0
 INREF
-        bytes 0,0,0,0,0
+        byte 0,0,0,0,0
 FLCTR
-        bytes 0,0
+        byte 0,0
 ; *** INCREASE PTR BY 2
 INCPTR2
         INC PTR

@@ -2,23 +2,23 @@
 
 * = $13B0
         ;.D PETDLML.BIN
-        BLOCKS = $1AD8
-        INDEX = $1590
-        PTR = $FE
-        EOALL = $7FFE
+BLOCKS = $1AD8
+INDEX = $1590
+PTR = $FE
+EOALL = $7FFE
         JMP GETWORD
         JMP CHKWORD
 ; THE INPUT BUFFER
 INPT
-        bytes 0,0,0,0,0
+        byte 0,0,0,0,0
 BLKST
-        bytes 0,0
+        byte 0,0
 BLKEN
-        bytes 0,0
+        byte 0,0
 INREF
-        bytes 0,0,0,0,0
+        byte 0,0,0,0,0
 FLCTR
-        bytes 0,0
+        byte 0,0
 ; *** INCREASE PTR BY 2
 INCPTR2
         INC PTR

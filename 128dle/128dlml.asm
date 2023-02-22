@@ -2,23 +2,23 @@
 
 * = $8C00
         ;.D 128DLML.BIN
-        BLOCKS = $9348
-        INDEX = $8E00
-        PTR = $FE
-        EOALL = $F86E
+BLOCKS = $9348
+INDEX = $8E00
+PTR = $FE
+EOALL = $F86E
         JMP GETWORD
         JMP CHKWORD
 ; THE INPUT BUFFER
 INPT
-        bytes 0,0,0,0,0
+        byte 0,0,0,0,0
 BLKST
-        bytes 0,0
+        byte 0,0
 BLKEN
-        bytes 0,0
+        byte 0,0
 INREF
-        bytes 0,0,0,0,0
+        byte 0,0,0,0,0
 FLCTR
-        bytes 0,0
+        byte 0,0
 ; *** INCREASE PTR BY 2
 INCPTR2
         INC PTR
