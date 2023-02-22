@@ -1,10 +1,10 @@
 !--------------------------------------------------
 !- Tuesday, February 21, 2023 2:23:36 PM
 !- Import of : 
-!- c:\dev\c=ordle\128dle\128dle.prg
+!- c:\dev\c=ordle\herdle\herdle.prg
 !- Commodore 128 BASIC 7/7.1
 !--------------------------------------------------
-10 rem 128dle - for c128
+10 rem herdle - for c128
 20 rem ======
 30 rem by bo zimmerman and steve gray
 40 rem v1.0, 2023-02-22
@@ -22,8 +22,8 @@
 160 l$="{black}CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"
 170 bank1:ifpeek(35840)=76 then bank15:goto 210
 180 bank15:ifl=0thengosub2000
-190 ifl=0thenl=1:bload"128dldict.bin",u8,b1
-200 ifl=1thenl=2:bload"128dlml.bin",u8,b1
+190 ifl=0thenl=1:bload"herdldict.bin",u8,b1
+200 ifl=1thenl=2:bload"herdlml.bin",u8,b1
 210 :
 220 rem---- generate the word
 230 :
@@ -40,7 +40,7 @@
 320 :
 330 rem---- draw screen
 340 :
-350 print"{clear}{white}{space*3}128dle - guess the 5 letter word!"
+350 print"{clear}{white}{space*3}herdle - guess the 5 letter word!"
 360 print l$
 370 s$="{space*5}"
 380 n=3:gosub1270
@@ -145,7 +145,7 @@
 2015 X$="{space*2}"
 2020 PRINT"{clear}{down*3}
 2025 n=0:gosub 1290:printx$;
-2030 s$="{space*3}128dle{space*3}":gosub 960
+2030 s$="{space*3}herdle{space*3}":gosub 960
 2035 n=1:gosub 1290:printx$;
 2040 s$="{space*5}by{space*5}":gosub 960
 2045 n=2:gosub 1290:printx$;

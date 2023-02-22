@@ -1,7 +1,7 @@
 
 
 * = $8C00
-        ;.D 128DLML.BIN
+        ;.D HERDLML.BIN
 BLOCKS = $9348
 INDEX = $8E00
 PTR = $FE
