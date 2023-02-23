@@ -20,14 +20,14 @@
 140 b2$="{cm n}{down}{left*3}L{cm p}{sh @}{up*2}"
 150 p$="{home}{down*21}"
 160 l$="{black}CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"
-170 bank1:ifpeek(35840)=76 then bank15:goto 210
+170 bank0:ifpeek(35840)=76 then bank15:goto 210
 180 bank15:ifl=0thengosub2000
-190 ifl=0thenl=1:bload"herdldict.bin",u8,b1
-200 ifl=1thenl=2:bload"herdlml.bin",u8,b1
+190 ifl=0thenl=1:bload"herdldict.bin",u8,b0
+200 ifl=1thenl=2:bload"herdlml.bin",u8,b0
 210 :
 220 rem---- generate the word
 230 :
-240 wx=int(rnd(.)*mw):bank1
+240 wx=int(rnd(.)*mw):bank0
 250 poke35847,int(wx/256)
 260 poke35846,wx-(256*peek(35847))
 270 sys35840
@@ -66,7 +66,7 @@
 580 :
 590 FORI=1TO5
 600 A$=MID$(G$,I,1)
-610 BANK 1:POKE35845+I,ASC(A$):BANK 15
+610 BANK 0:POKE35845+I,ASC(A$):BANK 15
 620 IFMID$(W$,I,1)=A$ THEN FE=0:GOTO670
 630 FE=1
 640 FOR II=1 TO 5
@@ -75,7 +75,7 @@
 670 AN(I)=FE
 680 NEXT I
 690 IF E=1 GOTO 550
-700 BANK1:SYS35843
+700 BANK0:SYS35843
 710 IF PEEK(35846)=0 THEN PRINT"{red}{down}not a word!{left*11}{up}";:EN=1:BANK15:GOTO550
 720 :
 730 REM---- DISPLAY RESULTS
