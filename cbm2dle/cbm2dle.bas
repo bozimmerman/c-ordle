@@ -165,20 +165,20 @@
 3099 :
 3100 REM---- B-SERIES
 3101 :
-3110 B$(0)="{reverse on}o{cm t}p{down}{left*3}{cm g} {cm m}{down}{left*3}l{cm @}{sh @}{up*2}"
-3120 B$(1)="{reverse off}o{cm t}p{down}{left*3}{cm g} {cm m}{down}{left*3}l{cm @}{sh @}{up*2}"
+3110 B$(0)="{reverse on}O{cm t}P{down}{left*3}{cm g} {cm m}{down}{left*3}L{cm @}{sh @}{up*2}"
+3120 B$(1)="{reverse off}O{cm t}P{down}{left*3}{cm g} {cm m}{down}{left*3}L{cm @}{sh @}{up*2}"
 3130 B$(2)="{reverse off}{cm +*3}{down}{left*3}{cm +*3}{down}{left*3}{cm +*3}{up*2}"
-3140 B$(3)="{reverse off}o{cm t}p{down}{left*3}{cm g} {cm m}{down}{left*3}l{cm @}{sh @}{up*2}"
-3145 B$(4)="{reverse off}o{cm t}p{down}{left*3}{cm g} {cm m}{down}{left*3}l{cm @}{sh @}{up*2}"
+3140 B$(3)="{reverse off}O{cm t}P{down}{left*3}{cm g} {cm m}{down}{left*3}L{cm @}{sh @}{up*2}"
+3145 B$(4)="{reverse off}O{cm t}P{down}{left*3}{cm g} {cm m}{down}{left*3}L{cm @}{sh @}{up*2}"
 3150 RETURN
 3199 :
 3200 REM---- P500
 3201 :
-3250 B$(0)="{green}{reverse on}o{cm y}p{down}{left*3}{cm g} {cm m}{down}{left*3}l{cm p}{sh @}{up*2}"
-3260 B$(1)="{gray}{reverse on}o{cm y}p{down}{left*3}{cm g} {cm m}{down}{left*3}l{cm p}{sh @}{up*2}"
-3270 B$(2)="{yellow}{reverse on}o{cm y}p{down}{left*3}{cm g} {cm m}{down}{left*3}l{cm p}{sh @}{up*2}"
-3280 B$(3)="{light gray}{reverse on}o{cm y}p{down}{left*3}{cm g} {cm m}{down}{left*3}l{cm p}{sh @}{up*2}"
-3285 B$(4)="{black}{reverse on}o{cm y}p{down}{left*3}{cm g} {cm m}{down}{left*3}l{cm p}{sh @}{up*2}"
+3250 B$(0)="{green}{reverse on}O{cm y}P{down}{left*3}{cm g} {cm m}{down}{left*3}L{cm p}{sh @}{up*2}"
+3260 B$(1)="{gray}{reverse on}O{cm y}P{down}{left*3}{cm g} {cm m}{down}{left*3}L{cm p}{sh @}{up*2}"
+3270 B$(2)="{yellow}{reverse on}O{cm y}P{down}{left*3}{cm g} {cm m}{down}{left*3}L{cm p}{sh @}{up*2}"
+3280 B$(3)="{light gray}{reverse on}O{cm y}P{down}{left*3}{cm g} {cm m}{down}{left*3}L{cm p}{sh @}{up*2}"
+3285 B$(4)="{black}{reverse on}O{cm y}P{down}{left*3}{cm g} {cm m}{down}{left*3}L{cm p}{sh @}{up*2}"
 3290 TC$="{black}":REM BLACK
 3300 POKE55328,4:REM BORDER
 3310 RETURN
