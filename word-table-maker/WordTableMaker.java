@@ -12,10 +12,15 @@ public class WordTableMaker {
 	{
 		if(args.length==0)
 		{
-			System.out.println("WordTableMaker <start address>");
+			System.out.println("WordTableMaker (vic20) <start address>");
 			System.exit(-1);
 		}
-		final int startOfIndex = Integer.parseInt(args[0]);
+		int startOfIndex;
+		final boolean vic20 = ((args.length==2)&&(args[0].equalsIgnoreCase("vic20")));
+		if(vic20)
+			startOfIndex = Integer.parseInt(args[1]);
+		else
+			startOfIndex = Integer.parseInt(args[0]);
 		//final int startOfIndex=5520;
 		//final int startOfIndex=32768;
 		//final int startOfIndex=36352;
@@ -78,6 +83,7 @@ public class WordTableMaker {
 		final Map<String,Long> blockStarts = new HashMap<String,Long>();
 		byte[] block;
 		int ctr=0;
+		final List<byte[]> blocksOut = new ArrayList<byte[]>();
 		try(ByteArrayOutputStream blksOut = new ByteArrayOutputStream())
 		{
 			for(char fl='a';fl<='z';fl++)
@@ -87,6 +93,14 @@ public class WordTableMaker {
 					final String key=""+fl+""+sl;
 					if(theTable.containsKey(key))
 					{
+						if(vic20
+						&&(nextStart<40960)
+						&&((nextStart + theTable.get(key).size()*2)>=32768))
+						{
+							blocksOut.add(blksOut.toByteArray());
+							blksOut.reset();
+							nextStart = 40960;
+						}
 						blockStarts.put(key, Long.valueOf(nextStart));
 						nextStart += theTable.get(key).size()*2;
 						for(final String s : theTable.get(key))
@@ -99,7 +113,7 @@ public class WordTableMaker {
 							final int b=(b3<<10)+(b4<<5)+b5;
 							final byte b1 = (byte)(((b >> 8)|common) & 0xff);
 							final byte b2 = (byte)(b & 0xff);
-							System.out.println(ctr+")"+fl+sl+s+": "+b3+","+b4+","+b5+"="+b+":="+(b1&0xff)+","+(b2&0xff));
+							//System.out.println(ctr+")"+fl+sl+s+": "+b3+","+b4+","+b5+"="+b+":="+(b1&0xff)+","+(b2&0xff));
 							blksOut.write(new byte[] { b1,b2});
 						}
 					}
@@ -138,19 +152,32 @@ public class WordTableMaker {
 			e.printStackTrace();
 			return;
 		}
-		try(FileOutputStream fout = new FileOutputStream(new File("dict.bin")))
+		blocksOut.add(block);
+		int n = 1;
+		String ns = "";
+		for(final byte[] block1 : blocksOut)
 		{
-			final byte b2=(byte)(Math.round(Math.floor(startOfIndex/256.0)) & 0xff);
-			final byte b1=(byte)((startOfIndex % 256) & 0xff);
-			fout.write(new byte[] {b1, b2});
-			fout.write(header);
-			fout.write(block);
+			try(FileOutputStream fout = new FileOutputStream(new File("dict"+ns+".bin")))
+			{
+				final byte b2=(byte)(Math.round(Math.floor(startOfIndex/256.0)) & 0xff);
+				final byte b1=(byte)((startOfIndex % 256) & 0xff);
+				fout.write(new byte[] {b1, b2});
+				if(n == 1)
+				{
+					fout.write(header);
+					System.out.println("end of index = "+Integer.toHexString(startOfIndex + header.length));
+					                                        startOfIndex=40960;
+				}
+				fout.write(block1);
+			}
+			catch(final IOException e)
+			{
+				e.printStackTrace();
+			}
+			ns = ""+(++n);
 		}
-		catch(final IOException e)
-		{
-			e.printStackTrace();
-		}
-		System.out.println("end of table="+Integer.toHexString(nextStart));
+		System.out.println("end of last table="+Integer.toHexString(nextStart));
+		System.out.println(ctr+" words");
 	}
 
 }
