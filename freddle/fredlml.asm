@@ -1,11 +1,11 @@
 
 
-* = $8C00
-        ;.D HERDLML.BIN
-BLOCKS = $9348
-INDEX = $8E00
+* = $3000
+        ;.FREDLML.BIN
+BLOCKS = $3748
+INDEX = $3200
 PTR = $FE
-EOALL = $F86E
+EOALL = $9c6e
         JMP GETWORD
         JMP CHKWORD
 ; THE INPUT BUFFER
@@ -19,6 +19,20 @@ INREF
         byte 0,0,0,0,0
 FLCTR
         byte 0,0
+BNKBUT
+        byte 0,0
+;** BANK IN
+BANKIN
+        LDA $01
+        STA BNKBUT
+        LDA #0
+        STA $01
+        RTS
+BANKOT
+        LDA BNKBUT
+        STA $01
+        RTS
+
 ; *** INCREASE PTR BY 2
 INCPTR2
         INC PTR
@@ -62,6 +76,7 @@ GETWORD
         STA FLCTR
         STA FLCTR+1
         SEI
+        JSR BANKIN
 ;STA ONRAM
 ; START THE SCAN
 GW1
@@ -106,6 +121,7 @@ GW3
         BNE GW35
         STA INPT; NO, FAIL
 ;STA ONROM
+        JSR BANKOT
         CLI
         RTS
 GW35
@@ -138,8 +154,11 @@ GW35
         ADC #$41
         STA INPT+2; WE NOW HAVE THE 3RD LETTER
 ;STA ONROM
+        JSR BANKOT
         CLI
         RTS
+
+
 ; CHECK THE WORD IN INPT AGAINST THE LIST
 CHKWORD
         LDA INPT+2
@@ -179,6 +198,7 @@ CHKWORD
         STA INREF+1
 ; OK, NOW INREF+1 AND INREF+2 HAVE THE BYTES!
         SEI
+        JSR BANKIN
 ;STA ONRAM
         LDA #<INDEX
         STA PTR
@@ -197,6 +217,7 @@ CHK0
         LDA #0; RECORD A FAIL
         STA INPT
 ;STA ONROM
+        JSR BANKOT
         CLI
         RTS
 CHK1
@@ -213,6 +234,7 @@ CHK1
         BNE CHK2
         STA INPT; FOUND LETTERS, BUT NO WORDS, SO FAIL
 ;STA ONROM
+        JSR BANKOT
         CLI
         RTS
 CHK2
@@ -258,6 +280,7 @@ CHK4
         LDA #0; REACHED END, AND NOT FOUND, SO...
         STA INPT
 ;STA ONROM
+        JSR BANKOT
         CLI
         RTS
 CHK5
@@ -273,5 +296,6 @@ CHK5
         LDA #$FF
         STA INPT; WINNER FOUND!
 ;STA ONROM
+        JSR BANKOT
         CLI
         RTS
