@@ -1,59 +1,59 @@
 !--------------------------------------------------
-!- Sunday, March 17, 2024 7:44:19 PM
+!- Tuesday, February 21, 2023 2:23:36 PM
 !- Import of : 
-!- c:\dev\c-ordle\freddle\freddle.prg
-!- Unknown Machine
+!- c:\dev\c=ordle\herdle\herdle.prg
+!- Commodore 128 BASIC 7/7.1
 !--------------------------------------------------
-10 REM FREDDLE - FOR C65
-20 REM ======
-30 REM BY BO ZIMMERMAN AND STEVE GRAY
-40 REM V1.0, 2023-02-22
-50 REM-------------------------------
+10 rem herdle - for c128
+20 rem ======
+30 rem by bo zimmerman and steve gray
+40 rem v1.0, 2023-02-22
+50 rem-------------------------------
 60 :
-70 BACKGROUND0:BORDER0:PRINTCHR$(142);
+70 color0,1:color4,1:color6,1:printchr$(142);
 80 :
-90 MW=12943:GOSUB3000
-100 W$=""
-110 T$="{space*12}"
-120 Z$="{reverse on}{space*3}{reverse off}{white}="
-130 B1$="{reverse on}O{cm y}P{down}{left*3}{cm g}"
-140 B2$="{cm n}{down}{left*3}L{cm p}{sh @}{up*2}"
-150 P$="{home}{down*21}"
-160 L$="{black}CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"
-170 BANK0:IFPEEK(12288)=76 THEN BANK15:GOTO 210
-180 BANK15:IFL=0THENGOSUB2000
-190 IFL=0THENL=1:BLOAD"fredldict.bin",U8,B0
-200 IFL=1THENL=2:BLOAD"fredlml.bin",U8,B0
+90 mw=12943:gosub3000
+100 w$=""
+110 t$="{space*12}"
+120 z$="{reverse on}{space*3}{reverse off}{white}="
+130 b1$="{reverse on}O{cm y}P{down}{left*3}{cm g}"
+140 b2$="{cm n}{down}{left*3}L{cm p}{sh @}{up*2}"
+150 p$="{home}{down*21}"
+160 l$="{black}CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"
+170 bank0:ifpeek(35840)=76 then bank15:goto 210
+180 bank15:ifl=0thengosub2000
+190 ifl=0thenl=1:bload"herdldict.bin",u8,b0
+200 ifl=1thenl=2:bload"herdlml.bin",u8,b0
 210 :
-220 REM---- GENERATE THE WORD
+220 rem---- generate the word
 230 :
-240 WX=INT(RND(.)*MW):BANK0
-250 POKE12295,INT(WX/256)
-260 POKE12294,WX-(256*PEEK(12295))
-270 SYS12288
-275 IFPEEK(12294)=0THEN240
-280 W$=""
-290 FORI=0TO4
-300 W$=W$+CHR$(PEEK(12294+I))
-310 NEXT:BANK 15
-315 SC(7)=SC(7)+1
+240 wx=int(rnd(.)*mw):bank0
+250 poke35847,int(wx/256)
+260 poke35846,wx-(256*peek(35847))
+270 sys35840
+275 ifpeek(35846)=0then240
+280 w$=""
+290 fori=0to4
+300 w$=w$+chr$(peek(35846+i))
+310 next:bank 15
+315 sc(7)=sc(7)+1
 320 :
-330 REM---- DRAW SCREEN
+330 rem---- draw screen
 340 :
-350 PRINT"{clear}{white}{space*2}freddle - guess the 5 letter word!"
-360 PRINT L$
-370 S$="{space*5}"
-380 N=3:GOSUB1270
-390 FORJ=1TO6
-400 PRINT T$;
-410 GOSUB940
-420 NEXT J
-430 PRINT"{down*3}";L$
-440 PRINT"{space*4}";
-450 N=0:GOSUB1270:PRINT Z$;"correct ";
-460 N=2:GOSUB1270:PRINT Z$;"place ";
-470 N=1:GOSUB1270:PRINT Z$;"wrong";
-480 PRINT"{home}{down}
+350 print"{clear}{white}{space*3}herdle - guess the 5 letter word!"
+360 print l$
+370 s$="{space*5}"
+380 n=3:gosub1270
+390 forj=1to6
+400 print t$;
+410 gosub940
+420 next j
+430 print"{down*3}";l$
+440 print"{space*4}";
+450 n=0:gosub1270:print z$;"correct ";
+460 n=2:gosub1270:print z$;"place ";
+470 n=1:gosub1270:print z$;"wrong";
+480 print"{home}{down}
 490 :
 500 REM---- ENTER A GUESS
 510 :
@@ -66,7 +66,7 @@
 580 :
 590 FORI=1TO5
 600 A$=MID$(G$,I,1)
-610 BANK 0:POKE12293+I,ASC(A$):BANK 15
+610 BANK 0:POKE35845+I,ASC(A$):BANK 15
 620 IFMID$(W$,I,1)=A$ THEN FE=0:GOTO670
 630 FE=1
 640 FOR II=1 TO 5
@@ -75,8 +75,8 @@
 670 AN(I)=FE
 680 NEXT I
 690 IF E=1 GOTO 550
-700 BANK0:SYS12291
-710 IF PEEK(12294)=0 THEN PRINT"{red}{down}not a word!{left*11}{up}";:EN=1:BANK15:GOTO550
+700 BANK0:SYS35843
+710 IF PEEK(35846)=0 THEN PRINT"{red}{down}not a word!{left*11}{up}";:EN=1:BANK15:GOTO550
 720 :
 730 REM---- DISPLAY RESULTS
 740 :
@@ -88,24 +88,24 @@
 800 NEXT I
 810 PRINT"{down*2}
 820 :
-830 REM---- CHECK FOR WIN
+830 rem---- check for win
 840 :
-850 GU=GU+1
-860 IF W$=G$ THEN PRINT P$;"{green}you win!":SC(GU-1)=SC(GU-1)+1:GOTO 890
-870 IF GU>6 THEN PRINT P$;"{red}you failed. the word was: {white}";W$:GOTO 890
-880 GOTO530
-890 PRINT"{white}play again (y/n)?";
-900 GET A$:IF A$="y" GOTO 220
-910 IF A$<>"n"GOTO900
-915 OPEN8,8,8,"@0:scoredle,s,w":FORI=1TO7:PRINT#8,SC(I):NEXTI:CLOSE8
-920 PRINT"{clear}{white}";CHR$(14);:GOSUB3400:END
+850 gu=gu+1
+860 if w$=g$ then print p$;"{green}you win!":sc(gu-1)=sc(gu-1)+1:goto 890
+870 if gu>6 then print p$;"{red}you failed. the word was: {white}";w$:goto 890
+880 goto530
+890 print"{white}play again (y/n)?";
+900 get a$:if a$="y" goto 220
+910 if a$<>"n"goto900
+915 open8,8,8,"@0:scoredle,s,w":fori=1to7:print#8,sc(i):nexti:close8
+920 print"{clear}{white}";chr$(14);:gosub3400:end
 930 :
-940 REM---- PRINT STRING INSIDE BOXES
+940 rem---- print string inside boxes
 950 :
-960 FORA=1TO LEN(S$)
-970 C$=MID$(S$,A,1):GOSUB 1020
-980 NEXT
-990 PRINT"{down*2}
+960 fora=1to len(s$)
+970 c$=mid$(s$,a,1):gosub 1020
+980 next
+990 print"{down*2}
 1000 RETURN
 1010 :
 1020 REM---- DRAW BOX WITH LETTER INSIDE
@@ -144,22 +144,22 @@
 2010 :
 2015 X$="{space*2}"
 2020 PRINT"{clear}{down*3}
-2025 N=0:GOSUB 1290:PRINTX$;
-2030 S$="{space*2}freddle{space*3}":GOSUB 960
-2035 N=1:GOSUB 1290:PRINTX$;
-2040 S$="{space*5}by{space*5}":GOSUB 960
-2045 N=2:GOSUB 1290:PRINTX$;
-2050 S$="bo zimmerman":GOSUB 960
-2055 N=1:GOSUB 1290:PRINTX$;
-2060 S$="{space*5}and{space*4}":GOSUB 960
-2065 N=2:GOSUB 1290:PRINTX$;
-2070 S$=" steve gray ":GOSUB 960
-2080 PRINT"{white}{down*2}{space*14}loading... "
-2100 RETURN
-2110 RETURN
-3000 DIMSC(7):OPEN1,8,15:OPEN8,8,8,"scoredle,s,r"
-3010 INPUT#1,E:IFE>0THEN3030
-3020 FORI=1TO7:INPUT#8,SC(I):NEXTI
-3030 CLOSE8:CLOSE1
+2025 n=0:gosub 1290:printx$;
+2030 s$="{space*3}herdle{space*3}":gosub 960
+2035 n=1:gosub 1290:printx$;
+2040 s$="{space*5}by{space*5}":gosub 960
+2045 n=2:gosub 1290:printx$;
+2050 s$="bo zimmerman":gosub 960
+2055 n=1:gosub 1290:printx$;
+2060 s$="{space*5}and{space*4}":gosub 960
+2065 n=2:gosub 1290:printx$;
+2070 s$=" steve gray ":gosub 960
+2080 print"{white}{down*2}{space*14}loading... "
+2100 return
+2110 return
+3000 dimsc(7):open1,8,15:open8,8,8,"scoredle,s,r"
+3010 input#1,e:ife>0then3030
+3020 fori=1to7:input#8,sc(i):nexti
+3030 close8:close1
 3400 PRINT"totals out of";SC(7);"games."
 3410 FORI=1TO6:PRINT"guess";I;":";SC(I):NEXTI:RETURN
